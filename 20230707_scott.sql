@@ -200,3 +200,42 @@ select * from t1;
 select length(c1), length(c2) from t1;
 
 -- ERD ( Entity Relationship Diagram )
+
+insert into emp (ename, empno, job, mgr, hiredate, deptno)
+    values ('EJK', 8003, 'T', 7788, SYSDATE, 40) ;
+SELECT * FROM EMP;
+insert into emp (ename, empno, job, mgr, hiredate, deptno)
+    values ('EJK2', 8004, 'P', NULL, TO_DATE('2023-07-12', 'YYYY-MM-DD'), 40) ;
+COMMIT;
+
+update emp
+    set mgr = 7788
+    where ename='ejk2'
+    --  update 명령문의 where 절에는 컬럼명 pk=값
+    --  where절에는 컬럼명 pk=값 --> resultset은 단일행
+;   -- 
+rollback;
+select * from emp;
+
+-- 30번 부서의 mgr가 SMITH 7908 로 조직개편
+update emp
+    set mgr = 7908
+    where deptno=30
+;
+update emp
+    set mgr = 7902
+    where ename = 'EJK2'
+;
+-- 여러 DML 명령어 들을 묶어서 하나의 행동(일)처리를 하고자 할 때 commit / rollback 을 적절히 사용.
+-- 1 DML 명령어가 하나의 행동(일) 처리 단위라면 DML - commit;
+-- 2 이상 DML 명령어가 하나의 행동(일) 처리 단위라면 DML 모두가 성공해야 - commit;, 그 중 일부가 실패했다면 - rollback
+-- 하나의 행동(일) 처리단위를 transaction 트랜잭션 - commit/rollback 명려어가 수행되는 단위
+-- commit;
+-- rollback;
+
+commit;
+select * from emp;
+select * from dept;
+-- 새로운 부서 50번이 만들어지고 그 부서에 신입사원 EJ3 (8005), EJ4(5006)을 투입함.
+insert into emp (ename, empno, deptno) values ('EJ3', 8005, 50); 
+insert into emp (ename, empno, deptno) values ('EJ4', 8005, 50); 

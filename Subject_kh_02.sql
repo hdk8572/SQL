@@ -103,5 +103,6 @@ from employee
 
 21. EMPLOYEE테이블에서 직원 명, 부서코드, 생년월일, 나이(만) 조회 (단, 생년월일은 주민번호에서 추출해서 00년 00월 00일로 출력되게 하며 나이는 주민번호에서 출력해서 날짜데이터로 변환한 다음 계산)
 
-select emp_name "직원 명", dept_code "부서코드", substr(emp_no,1,2)||+'년 '+||substr(emp_no,1,2)||+'년' 
+select emp_name "직원 명", dept_code "부서코드", substr(emp_no,1,2)||'년 '||substr(emp_no,3,2)||+'월 '||substr(emp_no,5,2)||+'일' "생년월일",
+        (abs(substr(sysdate,1 ,2)-substr(to_date(substr(emp_no, 1, 2),'yy'), 1, 2))) "나이(만)"
 from employee;
