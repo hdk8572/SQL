@@ -236,6 +236,34 @@ update emp
 commit;
 select * from emp;
 select * from dept;
+-- 20번 부서에 신입사원 EJ3(8005), EJ4(5006)을 투입함.
+insert into emp (ename, empno, deptno) values ('EJ3', 8005, 20); 
+insert into emp (ename, empno, deptno) values ('EJ4', 8006, 20); 
+insert all
+    into emp (ename, empno, deptno) values ('EJ3', 8005, 20); 
+    into emp (ename, empno, deptno) values ('EJ4', 8006, 20); 
+select * from dual;
+    
 -- 새로운 부서 50번이 만들어지고 그 부서에 신입사원 EJ3 (8005), EJ4(5006)을 투입함.
-insert into emp (ename, empno, deptno) values ('EJ3', 8005, 50); 
-insert into emp (ename, empno, deptno) values ('EJ4', 8005, 50); 
+
+select * from user_sequences;
+--
+select * from user_indexes;
+select * from user_ind_columns;
+select * from user_constraints;
+
+create index idx_emp_sal on emp(sal);
+create index idx_emp_sal on emp(sal*12);
+-- where 절에 sal*12 > 5000 처럼 조건문에 사용이 빈번할 때 index 걸어줌
+create index idx_emp_sal_comm on emp(sal,comm);
+-- where 절에 sal > 5000 and comm > 200 처럼 조건문에 사용이 빈번할 때 index를 걸어줌
+select * from emp where sal>3000 and comm is not null;
+-- bitmap 기반 index - 도메인의 종류가 적을 때 동일한 데이터가 많은 경우 - gender 남여
+create bitmap index idx_emp_sal on emp(deptno);
+create bitmap index idx_emp_sal_comm on emp(job, deptno);
+-- 1. unique
+-- insert 오류체크빠름
+-- 2. non-unique
+alter index idx_emp_deptno ;
+
+
