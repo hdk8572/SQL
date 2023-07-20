@@ -287,3 +287,21 @@ select ename, deptno, sal
     from emp
     ;
     
+DESC DEPT;
+SELECT * FROM DEPT;
+
+create or replace NONEDITIONABLE procedure pro_dept_insert
+-- DECLARE
+is
+    maxdno dept.deptno%type;
+    dno dept.deptno%type;
+
+BEGIN
+    select max(deptno) into maxdno from dept;
+    insert into dept (dname, deptno, loc) values ('EJ5', maxdno+1, '서울');
+    insert into dept (dname, deptno, loc) values ('EJ5', maxdno+2, '서울');
+--    procedure 는 update, delete, select 등 모두 활용 가능함.
+    commit;
+END;
+
+

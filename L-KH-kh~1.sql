@@ -1,0 +1,9 @@
+CREATE OR REPLACE PROCEDURE KH_GUGUDAN(
+    
+    )
+
+IS
+BEGIN
+
+END;
+/
